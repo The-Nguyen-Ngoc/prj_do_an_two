@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="vi">
+<head th:replace="fragments::header(${pageTitle})">
+</head>
+<body>
+<div th:replace="fragments::menu">
+</div>
+
+<br>
+
+<div th:replace="breadcrumb::content"></div>
+<br>
+<div class="row text-center">
+    <th:block th:each="cat:${category.children}">
+        <div class="col shadow-sm" th:if="${cat.enabled==true}">
+        <a th:href="@{'/c/'+ ${cat.alias}}">
+            <img th:src="@{${cat.imagePath}}" height="130"/>
+            <br>
+            <b>[[${cat.name}]]</b>
+        </a>
+        </div>
+    </th:block>
+</div>
+<br>
+<div class="row m-4 text-center justify-content-lg-center">
+    <th:block  th:each="product :${products}">
+    <div class="col-sm-2 m-2">
+        <div>
+            <a th:href="@{'/p/'+${product.alias}}">
+            <img width="150" th:src="@{${product.mainImagePath}}"/>
+            <br>
+            <b>[[${product.shortName}]]</b>
+            </a>
+        </div>
+        <div th:if="${product.discountPercent <= 0}">
+            <span class="text-info">
+                [[${product.priceMore}]] VND
+            </span>
+        </div>
+
+        <div th:if="${product.discountPercent > 0}">
+            <span class="text-danger"> [[${product.discountPrice}]] VND</span>
+             (<del>
+                [[${product.priceMore}]] VND
+            </del>)
+        </div>
+    </div>
+    </th:block>
+</div>
+<!--    Page console-->
+<div class="text-lg-center m-4 pt-2 border-bottom-4" th:if="${totalItems > 0}">
+    <h6>Đang hiển thị sản phẩm từ [[${startCount}]] đến [[${endCount}]] trên tổng số
+        [[${totalItems}]], trang [[${pageNum}]]/ [[${totalsPage}]]</h6>
+</div>
+
+<div class="text-lg-center m-4 pt-2 border-bottom-4" th:unless="${totalItems > 0}">
+    <h4>Không có sản phẩm!</h4>
+</div>
+
+<div th:if="${totalsPage>1}">
+    <nav>
+        <ul class="pagination justify-content-center pb-4">
+            <li th:class="${pageNum>1} ? 'page-item' : 'page-item disabled'">
+                <a th:replace="fragments :: page_link_product(${alias},1, 'Trang đầu')"/>
+            </li>
+            <li th:class="${pageNum>1} ? 'page-item' : 'page-item disabled'">
+                <a th:replace="fragments :: page_link_product(${alias},${pageNum-1}, '◀')"/>
+            </li>
+            <li th:class="${totalsPage > pageNum}? 'page-item' : 'page-item disabled'">
+                <a th:replace="fragments :: page_link_product(${alias},${pageNum+1}, '▶')"/>
+            </li>
+            <li th:class="${totalsPage > pageNum}? 'page-item' : 'page-item disabled'">
+                <a th:replace="fragments :: page_link_product(${alias},${totalsPage}, 'Trang cuối')"/>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+<div th:replace="fragments::footer_menu"></div>
+<br>
+</body>
+<footer th:replace="fragments::footer('thenguyenngochn@gmail.com - TheTech')"></footer>
+</html>

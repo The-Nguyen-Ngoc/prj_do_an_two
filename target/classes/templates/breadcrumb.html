@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="content" remove="tag">
+    <div class="mx-5" th:if="${categoryListParents != null}">
+        <div class="row">
+            <div class="rol">
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{'/'}">Trang chủ</a></li>
+                        <th:block th:each="parent : ${categoryListParents}">
+                            <li class="breadcrumb-item">
+                                <a th:href="@{'/c/'+ ${parent.alias}}">[[${parent.name}]]</a>
+                            </li>
+                        </th:block>
+                        <li th:if="${product != null}" class="breadcrumb-item">
+                            <span>[[${product.shortName}]]</span>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

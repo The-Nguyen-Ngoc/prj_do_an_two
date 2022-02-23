@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="vi">
+<head th:replace="fragments::header('Shop công nghệ - TheTech')">
+</head>
+<body>
+<div th:replace="fragments::menu">
+</div>
+<div th:replace="fragments::search">
+</div>
+
+<div>
+<h3 class="text-center m-4 p-2 border-bottom border-warning">Chọn danh mục sản phẩm</h3>
+</div>
+<br>
+<br>
+
+<div class="row m-4 text-center justify-content-lg-center">
+    <div class="col-3 m-2 shadow-sm" th:each="cat :${categories}">
+        <a th:href="@{'/c/'+ ${cat.alias}}">
+        <div><img th:src="@{${cat.imagePath}}" width="90" /></div>
+        <div class="font-weight-bold">
+           [[${cat.name}]]
+        </div>
+        </a>
+    </div>
+</div>
+<br>
+<div th:replace="fragments::footer_menu"></div>
+<br>
+</body>
+<footer th:replace="fragments::footer('thenguyenngochn@gmail.com - TheTech')"></footer>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="vi">
+<head th:replace="fragments::header(${pageTitle})">
+</head>
+<body>
+<div th:replace="fragments::menu">
+</div>
+
+<br>
+
+<div th:replace="breadcrumb::content"></div>
+<br>
+<br>
+<h2 class="text-center border-bottom border-dark p-4">Thông tin chi tiết sản phẩm: </h2>
+<br>
+<br>
+<div class="row m-4 border-bottom border-dark p-4">
+    <div class="col-sm-4">
+        <div class="shadow-lg">
+            <img id="bigImage" th:src="@{${product.mainImagePath}}" height="200" class="img-fluid" alt="Responsive image"/>
+        </div>
+        <div class="row mt-4 justify-content-center">
+            <div class="m-2 border" >
+                <img class="image-thumbnail" th:src="@{${product.mainImagePath}}" height="80" alt="Responsive image"/>
+            </div>
+            <th:block th:each="image : ${product.images}">
+                <div class="m-2 border">
+                    <img class="image-thumbnail" th:src="@{${image.imagePath}}" height="80" alt="Responsive image"/>
+                </div>
+            </th:block>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div>
+        <h3>[[${product.name}]]</h3>
+        </div>
+        <div>
+        <span class="my-2 text-monospace">Nhà sản xuất: [[${product.brand.name}]]</span>
+        </div>
+        <div>
+            <div th:if="${product.discountPercent <= 0}">
+            <span class="text-info text-lg-left font-weight-bold"> Giá:
+                [[${product.priceMore}]] VND
+            </span>
+            </div>
+
+            <div th:if="${product.discountPercent > 0}">
+                <span class="text-danger text-lg-left font-weight-bold">Giá chỉ còn: [[${product.discountPrice}]] VND</span>
+                (<del>Giá gốc: [[${product.priceMore}]] VND
+            </del>),<span class="text-info font-weight-bold mark"> Giảm: [[${product.discountPercent}]]%</span>
+            </div>
+        </div>
+        <br>
+        <div>
+            <div th:utext="${product.shortDescription}"></div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div>
+            <span th:if="${product.inStock}" class="text-success font-weight-bold">Số lượng: </span>
+            <span th:unless="${product.inStock}" class="text-danger font-weight-bold">Hết hàng </span>
+        </div>
+        <div th:if="${product.inStock}">
+        <div class="mt-2">
+            <input type="text" size="5" value="1"/>
+        </div>
+        <div class="mt-2">
+            <input type="button" value="Thêm vào giỏ" class="btn btn-outline-info"/>
+        </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row mb-4 mx-4">
+    <div class="col-6">
+        <div>
+            <div>
+            <h3 class="mark">Thông tin mô tả: </h3>
+            </div>
+            <div>
+                <div class="font-italic" th:utext="${product.fullDescription}"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <h4 class="mark">Chi tiết sản phẩm:</h4>
+        <div th:each="detail : ${product.details}">
+            <div><b class="h6">[[${detail.name}]]</b>
+                <span> : [[${detail.value}]]</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="slide::content"></div>
+<br>
+<br>
+<div th:replace="fragments::footer_menu"></div>
+<br>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.image-thumbnail').click(function () {
+            var src = $(this).attr('src');
+            $('#bigImage').attr('src', src);
+        });
+
+        $('#bigImage').click(function () {
+            $('#carouselModal').modal('show');
+        });
+    });
+</script>
+</body>
+<footer th:replace="fragments::footer('thenguyenngochn@gmail.com - TheTech')"></footer>
+</html>

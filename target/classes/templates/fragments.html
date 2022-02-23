@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="vi">
+
+<!--header-->
+<head th:fragment="header(title)">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
+
+    <title>[[${title}]]</title>
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    <script type="text/javascript" th:src="@{/js/common_form.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/style/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<a th:fragment="page_link_product(alias,pageNum, label)"
+   class="page-link bg-light text-dark"
+   th:href="@{'/c/'+ ${alias}+'/' + ${pageNum}}">[[${label}]]
+</a>
+
+<a th:fragment="page_link_search_product(keyword,pageNum, label)"
+   class="page-link bg-light text-dark"
+   th:href="@{'/search/page/'+ ${pageNum}+'?keyword='+${keyword}}">[[${label}]]
+</a>
+
+<!--search-->
+<div th:fragment="search" class="mr-4">
+    <div class="col-md-12 m-4">
+        <form th:action="@{'/search/'+'?keyword='+${keyword}}" method="get" class="form-inline">
+            <div class="input-group">
+                <input th:value="${keyword}" type="search" class="form-control" name="keyword" required placeholder="Tìm kiếm sản phẩm...">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-info" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--menu-->
+<div th:fragment="menu" class="w-auto text-center">
+    <a class=" mt-4" th:href="@{/}">
+        <img class="" th:src="@{/images/img_3.png}"
+             alt="logo small"/>
+    </a>
+    <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+        <input type="submit"/>
+    </form>
+    <nav class="navbar navbar-expand-lg">
+        &nbsp;&nbsp;&nbsp;
+        <button class="navbar-toggler text-white" type="button" data-toggle="collapse"
+                data-target="#topNavbar">
+           ♒
+        </button>
+        <div class="collapse navbar-collapse" id="topNavbar">
+            <ul class="navbar-nav mt-4">
+                    <li class="nav-item px-1 h5">
+                            <a class="nav-link text-danger border-bottom border-bottom-4 border-warning" th:href="@{/users}">Giỏ Hàng</a>
+                    </li>
+                    <li class="nav-item  px-1 h5">
+                            <a class="nav-link text-danger border-bottom border-bottom-4 border-warning" th:href="@{/users}">Thanh Toán</a>
+                    </li>
+                    <li class="nav-item  px-1 h5">
+                            <a class="nav-link text-danger border-bottom border-bottom-4 border-warning" th:href="@{/users}">Giao Hàng</a>
+                    </li>
+                    <li class="nav-item  px-1 h5">
+                            <a class="nav-link text-danger border-bottom border-bottom-4 border-warning" th:href="@{/users}">Đăng Nhập</a>
+                    </li>
+                    <li class="nav-item  px-1 h5">
+                            <a class="nav-link text-danger border-bottom border-bottom-4 border-warning" th:href="@{/users}">Đăng Ký</a>
+                    </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div th:fragment="footer_menu" class="w-auto text-center">
+    <nav class="navbar navbar-expand-lg bg-dark">
+        &nbsp;&nbsp;&nbsp;
+        <button class="navbar-toggler text-white" type="button" data-toggle="collapse"
+                data-target="#bottomNavbar">
+            <h6 class="text-info">X</h6>
+        </button>
+        <div class="collapse navbar-collapse" id="bottomNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item px-1 h6">
+                    <a class="nav-link text-info" th:href="@{/users}">Về chúng tôi</a>
+                </li>
+                <li class="nav-item  px-1 h6">
+                    <a class="nav-link text-info" th:href="@{/users}">Chính sách</a>
+                </li>
+                <li class="nav-item  px-1 h6">
+                    <a class="nav-link text-info" th:href="@{/users}">Trả hàng & Hoàn tiền</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+</body>
+<!--footer-->
+<footer th:fragment="footer(title)">
+    <p class="text-center h6 ">[[${title}]]</p>
+</footer>
+</html>
