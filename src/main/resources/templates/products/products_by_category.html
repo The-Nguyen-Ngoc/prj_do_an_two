@@ -33,17 +33,31 @@
             <b>[[${product.shortName}]]</b>
             </a>
         </div>
-        <div th:if="${product.discountPercent <= 0}">
-            <span class="text-info">
-                [[${product.priceMore}]] VND
+        <div>
+            <div th:if="${product.discountPercent <= 0}">
+            <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')" class="text-info">
+                [[${#numbers.formatDecimal(product.price,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] [[${CURRENCY_SYMBOL}]]
             </span>
-        </div>
+                <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')" class="text-info">
+               [[${CURRENCY_SYMBOL}]] [[${#numbers.formatDecimal(product.price,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]]
+            </span>
+            </div>
 
-        <div th:if="${product.discountPercent > 0}">
-            <span class="text-danger"> [[${product.discountPrice}]] VND</span>
-             (<del>
-                [[${product.priceMore}]] VND
-            </del>)
+            <div th:if="${product.discountPercent > 0}">
+                <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')" class="text-danger">
+                    [[${CURRENCY_SYMBOL}]] [[${#numbers.formatDecimal(product.discountPrice,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]]
+                </span>
+                <del th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')">
+                    ,Giá gốc: ([[${CURRENCY_SYMBOL}]] [[${#numbers.formatDecimal(product.price,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] )
+                </del>
+                <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')" class="text-danger">
+                    [[${#numbers.formatDecimal(product.discountPrice,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] [[${CURRENCY_SYMBOL}]]
+                </span>
+                <del th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')">
+                    ,Giá gốc: ([[${#numbers.formatDecimal(product.price,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] [[${CURRENCY_SYMBOL}]])
+                </del>
+                , <span class="text-info font-weight-bold mark"> Giảm: [[${product.discountPercent}]]%</span>
+            </div>
         </div>
     </div>
     </th:block>

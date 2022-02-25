@@ -18,10 +18,11 @@
 <div class="row m-4 border-bottom border-dark p-4">
     <div class="col-sm-4">
         <div class="shadow-lg">
-            <img id="bigImage" th:src="@{${product.mainImagePath}}" height="200" class="img-fluid" alt="Responsive image"/>
+            <img id="bigImage" th:src="@{${product.mainImagePath}}" height="200" class="img-fluid"
+                 alt="Responsive image"/>
         </div>
         <div class="row mt-4 justify-content-center">
-            <div class="m-2 border" >
+            <div class="m-2 border">
                 <img class="image-thumbnail" th:src="@{${product.mainImagePath}}" height="80" alt="Responsive image"/>
             </div>
             <th:block th:each="image : ${product.images}">
@@ -33,23 +34,37 @@
     </div>
     <div class="col-sm">
         <div>
-        <h3>[[${product.name}]]</h3>
+            <h3>[[${product.name}]]</h3>
         </div>
         <div>
-        <span class="my-2 text-monospace">Nhà sản xuất: [[${product.brand.name}]]</span>
+            <span class="my-2 text-monospace">Nhà sản xuất: [[${product.brand.name}]]</span>
         </div>
         <div>
             <div th:if="${product.discountPercent <= 0}">
-            <span class="text-info text-lg-left font-weight-bold"> Giá:
-                [[${product.priceMore}]] VND
+            <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')" class="text-info">
+                [[${#numbers.formatDecimal(product.price,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] [[${CURRENCY_SYMBOL}]]
+            </span>
+                <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')" class="text-info">
+               [[${CURRENCY_SYMBOL}]] [[${#numbers.formatDecimal(product.price,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]]
             </span>
             </div>
 
             <div th:if="${product.discountPercent > 0}">
-                <span class="text-danger text-lg-left font-weight-bold">Giá chỉ còn: [[${product.discountPrice}]] VND</span>
-                (<del>Giá gốc: [[${product.priceMore}]] VND
-            </del>),<span class="text-info font-weight-bold mark"> Giảm: [[${product.discountPercent}]]%</span>
+                <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')" class="text-danger">
+                    [[${CURRENCY_SYMBOL}]] [[${#numbers.formatDecimal(product.discountPrice,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]]
+                </span>
+                <del th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')">
+                    ,Giá gốc: ([[${CURRENCY_SYMBOL}]] [[${#numbers.formatDecimal(product.price,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] )
+                </del>
+                <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')" class="text-danger">
+                    [[${#numbers.formatDecimal(product.discountPrice,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] [[${CURRENCY_SYMBOL}]]
+                </span>
+                <del th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')">
+                    ,Giá gốc: ([[${#numbers.formatDecimal(product.price,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] [[${CURRENCY_SYMBOL}]])
+                </del>
+                , <span class="text-info font-weight-bold mark"> Giảm: [[${product.discountPercent}]]%</span>
             </div>
+
         </div>
         <br>
         <div>
@@ -62,12 +77,12 @@
             <span th:unless="${product.inStock}" class="text-danger font-weight-bold">Hết hàng </span>
         </div>
         <div th:if="${product.inStock}">
-        <div class="mt-2">
-            <input type="text" size="5" value="1"/>
-        </div>
-        <div class="mt-2">
-            <input type="button" value="Thêm vào giỏ" class="btn btn-outline-info"/>
-        </div>
+            <div class="mt-2">
+                <input type="text" size="5" value="1"/>
+            </div>
+            <div class="mt-2">
+                <input type="button" value="Thêm vào giỏ" class="btn btn-outline-info"/>
+            </div>
         </div>
     </div>
 </div>
@@ -76,7 +91,7 @@
     <div class="col-6">
         <div>
             <div>
-            <h3 class="mark">Thông tin mô tả: </h3>
+                <h3 class="mark">Thông tin mô tả: </h3>
             </div>
             <div>
                 <div class="font-italic" th:utext="${product.fullDescription}"></div>

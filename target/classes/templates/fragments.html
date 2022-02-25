@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
 
-    <title>[[${title}]]</title>
+    <title>[[${title}]] - [[${SITE_NAME}]]</title>
 
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
@@ -46,7 +46,7 @@
 <!--menu-->
 <div th:fragment="menu" class="w-auto text-center">
     <a class=" mt-4" th:href="@{/}">
-        <img class="" th:src="@{/images/img_3.png}"
+        <img class="" th:src="@{'/'+${SITE_LOGO}}"
              alt="logo small"/>
     </a>
     <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">

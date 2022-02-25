@@ -107,15 +107,15 @@ public class Product {
 
     @Transient
     public Integer getPriceMore(){
-        return (int) (price * 22000);
+        return (int) (price);
     }
 
     @Transient
     public Integer getDiscountPrice(){
         if(discountPercent >0) {
             float a =  price * (100 - discountPercent) / 100;
-            return Math.round(a*22000);
+            return Math.round(a);
         }
-        return(int) this.price*22000;
+        return(int) this.price;
     }
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="vi">
-<head th:replace="fragments::header('Shop công nghệ - TheTech')">
+<head th:replace="fragments::header('TheTech')">
 </head>
 <body>
 <div th:replace="fragments::menu">
@@ -29,5 +29,5 @@
 <div th:replace="fragments::footer_menu"></div>
 <br>
 </body>
-<footer th:replace="fragments::footer('thenguyenngochn@gmail.com - TheTech')"></footer>
+<footer th:replace="fragments::footer(${COPYRIGHT})"></footer>
 </html>
