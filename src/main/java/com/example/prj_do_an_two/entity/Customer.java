@@ -21,7 +21,7 @@ public class Customer {
 
     @Column(nullable = false, unique = true, length = 50)
     private String email;
-    @Column(nullable = false,  length = 64)
+    @Column(nullable = false, length = 64)
     private String password;
     @Column(nullable = false, name = "first_name", length = 50)
     private String firstName;
@@ -37,15 +37,28 @@ public class Customer {
     private String city;
     @Column(nullable = false, length = 45)
     private String state;
-    @Column(name = "postal_code", nullable = false,length = 64)
+    @Column(name = "postal_code",length = 64)
+    private String postalCode;
+    @Column(name = "verification_code", length = 64)
     private String verificationCode;
 
     private boolean enabled;
 
-    @Column(name="created_time")
+    @Column(name = "created_time")
     private Date createdTime;
 
     @ManyToOne
-    @JoinColumn(name="country_id")
+    @JoinColumn(name = "country_id")
     private Country country;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "authentication_type", length = 10)
+    private AuthenticationType authenticationType;
+
+    @Transient
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+
 }

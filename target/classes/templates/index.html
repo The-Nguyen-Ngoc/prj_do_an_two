@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="vi">
 <head th:replace="fragments::header('TheTech')">
 </head>
 <body>
 <div th:replace="fragments::menu">
 </div>
-<div th:replace="fragments::search">
-</div>
+<!--<a class="pl-3 h4 " th:href="@{/account_details}" sec:authentication="principal.userName"></a>-->
+<!--<div th:replace="fragments::search"></div>-->
+<div th:replace="fragments :: search_nav"></div>
+
 
 <div>
-<h3 class="text-center m-4 p-2 border-bottom border-warning">Chọn danh mục sản phẩm</h3>
+    <h3 class="text-center m-4 p-2 border-bottom border-warning">Chọn danh mục sản phẩm</h3>
 </div>
 <br>
 <br>
@@ -18,16 +21,25 @@
 <div class="row m-4 text-center justify-content-lg-center">
     <div class="col-3 m-2 shadow-sm" th:each="cat :${categories}">
         <a th:href="@{'/c/'+ ${cat.alias}}">
-        <div><img th:src="@{${cat.imagePath}}" width="90" /></div>
-        <div class="font-weight-bold">
-           [[${cat.name}]]
-        </div>
+            <div><img th:src="@{${cat.imagePath}}" width="90"/></div>
+            <div class="font-weight-bold">
+                [[${cat.name}]]
+            </div>
         </a>
     </div>
 </div>
 <br>
 <div th:replace="fragments::footer_menu"></div>
 <br>
+<script type="text/javascript">
+    $(document).ready(()=>{
+        $("#log_out").on('click',(e)=>{
+            e.preventDefault();
+            document.logoutForm.submit();
+
+        })
+    })
+</script>
 </body>
 <footer th:replace="fragments::footer(${COPYRIGHT})"></footer>
 </html>

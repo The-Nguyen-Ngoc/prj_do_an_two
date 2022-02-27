@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::header('Đăng Nhập 🕹️')">
+</head>
+<body>
+<div class="container-fluid text-center">
+    
+    <div th:replace="fragments::menu"></div>
+    <br>
+    <br>
+    <div>
+        <a class="btn btn-outline-info m-2 font-weight-bolder text-primary fab fa-google"
+        th:href="@{/oauth2/authorization/google}">Đăng Nhập Với Google</a>
+        <a class="btn btn-outline-info m-2 font-weight-bold text-primary fab fa-facebook">Đăng Nhập Với FaceBook</a>
+    </div>
+    <br>
+    <br>
+    <form th:action="@{/login}" method="post" style="max-width: 600px;max-height: 400px; margin: 0 auto">
+        <div th:if="${param.error}">
+            <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+        </div>
+        <div th:if="${param.logout}">
+            <p class="text-warning">You have been logged out.</p>
+        </div>
+
+        <div class="shadow shadow-lg p-3">
+            <h4 class="text-info border-bottom border-bottom-2 border-info p-2 font-weight-bold">Đăng Nhập</h4>
+            <p>
+                <input type="email" name="email" class="form-control" placeholder="E-mail" required />
+            </p>
+            <p>
+                <input type="password" name="password" class="form-control" placeholder="Password" required />
+            </p>
+            <p class="h6 text-info">
+                <input class="form-switch-lg" type="checkbox" name="remember-me" />&nbsp;Nhớ mật khẩu
+            </p>
+            <p>
+                <input type="submit" value="Login" class="btn btn-primary " />
+            </p>
+        </div>
+    </form>
+<br>
+    <div class="text-centere">
+        Bạn không có tài khoản? <a class="text-primary" th:href="@{/register}">Đăng Ký Ngay</a>
+    </div>
+<br><br>
+</div>
+</body>
+<footer th:replace="fragments::footer('thenguyenngochn@gmail.com - Page Login')">
+</footer>
+</html>

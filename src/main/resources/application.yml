@@ -1,0 +1,30 @@
+server:
+    port: 8080
+spring:
+    main:
+        allow-circular-references: true
+    datasource:
+        password: Ngocthe1
+        url: jdbc:mysql://localhost:3306/tech_shop
+        username: root
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect
+                format_sql: true
+        show-sql: true
+    mvc:
+        pathmatch:
+            matching-strategy: ant_path_matcher
+    security:
+        oauth2:
+            client:
+                registration:
+                    google:
+                        client-id: 641046950759-t8hpcv8amgq0arse3bdha4gmi9ntvkdh.apps.googleusercontent.com
+                        client-secret: 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
+                        scope:
+                            - email
+                            - profile

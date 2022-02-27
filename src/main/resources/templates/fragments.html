@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="vi">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <!--header-->
 <head th:fragment="header(title)">
@@ -44,17 +44,14 @@
     </div>
 </div>
 <!--menu-->
-<div th:fragment="menu" class="w-auto text-center">
+<div th:fragment="menu" class="w-auto text-center mb-8">
     <a class=" mt-4" th:href="@{/}">
         <img class="" th:src="@{'/'+${SITE_LOGO}}"
              alt="logo small"/>
     </a>
-    <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
-        <input type="submit"/>
-    </form>
     <nav class="navbar navbar-expand-lg">
         &nbsp;&nbsp;&nbsp;
-        <button class="navbar-toggler text-white" type="button" data-toggle="collapse"
+        <button class="navbar-toggler text-white border border-warning" type="button" data-toggle="collapse"
                 data-target="#topNavbar">
            ♒
         </button>
@@ -70,14 +67,75 @@
                             <a class="nav-link text-danger border-bottom border-bottom-4 border-warning" th:href="@{/users}">Giao Hàng</a>
                     </li>
                     <li class="nav-item  px-1 h5">
-                            <a class="nav-link text-danger border-bottom border-bottom-4 border-warning" th:href="@{/users}">Đăng Nhập</a>
+                            <a class="nav-link text-danger border-bottom border-bottom-4 border-warning" th:href="@{/login}">Đăng Nhập</a>
                     </li>
                     <li class="nav-item  px-1 h5">
-                            <a class="nav-link text-danger border-bottom border-bottom-4 border-warning" th:href="@{/users}">Đăng Ký</a>
+                            <a class="nav-link text-danger border-bottom border-bottom-4 border-warning" th:href="@{/register}">Đăng Ký</a>
+                    </li>
+                    <li class="nav-item  px-1 h5">
+                            <a class="nav-link text-danger border-bottom border-bottom-4 border-warning" th:href="@{/register}">Liên Hệ</a>
                     </li>
             </ul>
         </div>
     </nav>
+</div>
+
+
+<div th:fragment="search_nav" class="row mx-4">
+    <div class="col-md">
+        
+        <th:block sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post" th:hidden="true" id="logoutForm">
+            
+            </form>
+        </th:block>
+        
+        <nav class="navbar navbar-expand-sm bg-light">
+            <div class="collapse navbar-collapse float-left" id="searchNavbar">
+                <form class="form-inline justify-content-lg-start" th:action="@{/search}" method="get">
+                    <input type="search" name="keyword" class="form-control mr-sm-2"
+                           th:value="${searchKeyword}"
+                           placeholder="Từ khóa..." required />
+                    <button type="submit" class="btn btn-outline-info">
+                    <i class="fa fa-search"></i>
+                    </button>
+                </form>
+                <ul class="navbar-nav float-right mx-3">
+                    <th:block sec:authorize="isAuthenticated()">
+                        <li class="nav-item font-weight-bold border bg-warning border rounded-lg">
+                            <p class="nav-link">Xin chào
+                            <b> <a class="" th:href="@{/account}" sec:authentication="principal.name"></a>
+                            </b>!</p>
+                        </li>
+                        
+                        <li class="nav-item font-weight-bold">
+                            <a class="nav-link" th:href="@{/address_book}">Địa chỉ</a>
+                        </li>
+                        
+                        <li class="nav-item font-weight-bold">
+                            <a class="nav-link" href="">Hỏi Đáp</a>
+                        </li>
+                        
+                        <li class="nav-item font-weight-bold">
+                            <a class="nav-link" th:href="@{/reviews}">Đánh Giá</a>
+                        </li>
+                        
+                        <li class="nav-item font-weight-bold">
+                            <a class="nav-link" th:href="@{/orders}">Đơn Đặt Hàng</a>
+                        </li>
+                        
+                        <li class="nav-item font-weight-bold">
+                            <a class="nav-link fas fa-shopping-cart fa-2x" th:href="@{/cart}"></a>
+                        </li>
+                        <li> &nbsp; </li>
+                        <li class="nav-item font-weight-bold ml-4 text-white">
+                            <button class="nav-link h6 btn btn-outline-danger" id="logoutLink"> Đăng Xuất</button>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+        </nav>
+    </div>
 </div>
 
 <div th:fragment="footer_menu" class="w-auto text-center">

@@ -14,8 +14,6 @@ public interface CountryRepository extends CrudRepository<Country, Integer> {
 
     List<Country> findAllByOrderByNameAsc();
 
-    @Transactional
-    @Modifying
-    @Query("DELETE FROM Country c WHERE c.code = ?1")
-    void deleteByCode(String code);
+    @Query("select c from Country c where c.code = ?1")
+    Country findByCode(String code);
 }
