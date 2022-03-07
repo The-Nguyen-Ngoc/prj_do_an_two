@@ -73,6 +73,10 @@ public class Product {
     public Product() {
     }
 
+    public Product(Integer id) {
+        this.id = id;
+    }
+
     @Transient
     public String getMainImagePath(){
         if(id == null|| mainImage == null) return "/images/preview.png";

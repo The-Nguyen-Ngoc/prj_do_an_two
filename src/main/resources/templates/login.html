@@ -11,7 +11,8 @@
     <div>
         <a class="btn btn-outline-info m-2 font-weight-bolder text-primary fab fa-google"
         th:href="@{/oauth2/authorization/google}">Đăng Nhập Với Google</a>
-        <a class="btn btn-outline-info m-2 font-weight-bold text-primary fab fa-facebook">Đăng Nhập Với FaceBook</a>
+        <a  class="btn btn-outline-info m-2 font-weight-bold text-primary fab fa-facebook"
+            th:href="@{/oauth2/authorization/facebook}">Đăng Nhập Với FaceBook</a>
     </div>
     <br>
     <br>
@@ -40,6 +41,9 @@
         </div>
     </form>
 <br>
+    <div class="text-centere">
+       Quên mật khẩu? <a class="text-primary" th:href="@{/forgot_password}">Lấy lại mật khẩu</a>
+    </div>
     <div class="text-centere">
         Bạn không có tài khoản? <a class="text-primary" th:href="@{/register}">Đăng Ký Ngay</a>
     </div>

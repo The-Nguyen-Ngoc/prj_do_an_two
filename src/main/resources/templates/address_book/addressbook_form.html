@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::header('Thêm Mới Địa Chỉ')">
+</head>
+<body>
+<div class="container-fluid">
+    <div th:replace="fragments::menu"></div>
+    <br>
+    <div th:replace="fragments::search_nav"></div>
+    
+    <div>
+        <h3 class="text-center m-4 p-2 border-bottom border-warning">Thêm Địa Chỉ</h3>
+    </div>
+    <form th:action="@{/address_book/save}" method="post" th:object="${address}" class="shadow-sm p-4"
+          style="max-width: 800px; margin: 0 auto">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{defaulForShipping}">
+        <div class="form-group row px-4 py-1">
+            <label class="col-sm-4 font-weight-bold"> Tên: </label>
+            <input type="text" class="col-sm-8 form-control" id="firstName" name="name" placeholder="Nhập tên"
+                   th:field="*{firstName}"
+                  required
+                   maxlength="45" minlength="3"/>
+        
+        </div>
+        <div class="form-group row px-4 py-1">
+            <label class="col-sm-4 font-weight-bold"> Họ Và Tên Đệm: </label>
+            <input type="text" class="col-sm-8 form-control" placeholder="Nhập họ và tên đệm"
+                   th:field="*{lastName}"
+              
+                   maxlength="45" minlength="3"/>
+        
+        </div>
+        
+        <div class="form-group row px-4 py-1">
+            <label class="col-sm-4 font-weight-bold"> Số Điện Thoại: </label>
+            <input type="text" class="col-sm-8 form-control" placeholder="Nhập số điện thoại"
+                   th:field="*{phoneNumber}"
+                   required
+                   maxlength="15" minlength="8"/>
+        
+        </div>
+        
+        <div class="form-group row px-4 py-1">
+            <label class="col-sm-4 font-weight-bold">Địa chỉ phụ 1: </label>
+            <input type="text" class="col-sm-8 form-control" placeholder="Nhập địa chỉ"
+                   th:field="*{addressLine1}"
+     
+                   required
+                   maxlength="64" minlength="3"/>
+        
+        </div>
+        
+        <div class="form-group row px-4 py-1">
+            <label class="col-sm-4 font-weight-bold">Địa chỉ phụ 2: </label>
+            <input type="text" class="col-sm-8 form-control" placeholder="Nhập địa chỉ phụ"
+                   th:field="*{addressLine2}"
+                   maxlength="64" minlength="3"/>
+        
+        </div>
+        <div class="form-group row px-4 py-1">
+            <label class="col-sm-4 font-weight-bold">Tỉnh/ Thành Phố: </label>
+            <input type="text" class="col-sm-8 form-control" placeholder="Nhập tỉnh/ thành phố"
+                   th:field="*{city}"
+                   maxlength="45" minlength="2"/>
+        
+        </div>
+        <div class="form-group row px-4 py-1">
+            <label class="col-sm-4 font-weight-bold">Quốc Gia: </label>
+            <div class="cil-sm-8">
+                <select id="country" class="form-control" th:field="*{country}" >
+                    <th:block th:each="country: ${countries}">
+                        <option th:value="${country.id}">[[${country.name}]]</option>
+                    </th:block>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group row px-4 py-1">
+            <label class="col-sm-4 font-weight-bold">Tỉnh/ Thành: </label>
+            <div class="cil-sm-8">
+                <input type="text" class="col-sm-8 form-control"
+                       th:field="*{state}"
+                       list="listStates"
+                       maxlength="45" minlength="3"/>
+                <datalist id="listStates">
+                </datalist>
+            </div>
+        </div>
+        
+        <div class="form-group row px-4 py-1">
+            <label class="col-sm-4 font-weight-bold">Mã Bưu Điện: </label>
+            <div class="cil-sm-8">
+                <input type="text" class="col-sm-8 form-control"
+                       th:field="*{postalCode}"
+                       maxlength="10" minlength="2"/>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+        </div>
+    </form>
+    <br>
+    <br>
+</div>
+<br>
+<div th:replace="fragments::footer_menu"></div>
+<br>
+
+<script type="text/javascript">
+    var contextPath = "[[@{/}]]"
+    var dropDownCountry;
+    var dataListSate;
+
+    function loadStatesForCountry() {
+        selectedCountry = $('#country option:selected');
+        countryId = selectedCountry.val();
+        url = contextPath + "settings/list_states_by_country/"+countryId;
+        $.get(url,function (res){
+            dataListSate.empty();
+            $.each(res,function (index,state){
+                $("<option>").val(state.name).text(state.name).appendTo(dataListSate);
+            });
+        })
+    }
+
+    $(document).ready(function () {
+        dropDownCountry = $('#country');
+        dataListSate = $("#listStates");
+        
+        dropDownCountry.on('change', function (){
+            loadStatesForCountry();
+            $("#state").val("").focus();
+        })
+    
+    });
+
+    
+</script>
+</body>
+<footer th:replace="fragments::footer('thenguyenngochn@gmail.com')"></footer>
+</html>

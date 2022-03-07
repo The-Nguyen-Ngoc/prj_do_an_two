@@ -77,11 +77,9 @@
             <span th:unless="${product.inStock}" class="text-danger font-weight-bold">Hết hàng </span>
         </div>
         <div th:if="${product.inStock}">
+            <div th:replace="cart/quantity_control::quantity_control(1, ${product.id})"></div>
             <div class="mt-2">
-                <input type="text" size="5" value="1"/>
-            </div>
-            <div class="mt-2">
-                <input type="button" value="Thêm vào giỏ" class="btn btn-outline-info"/>
+                <input type="button" id="addToCart" value="+ 🛒" class="btn btn-outline-info"/>
             </div>
         </div>
     </div>
@@ -111,8 +109,14 @@
 <br>
 <br>
 <div th:replace="fragments::footer_menu"></div>
+<div th:replace="modal_fragments::modal_dialog"></div>
 <br>
 <script type="text/javascript">
+    contextPath = "[[@{/}]]";
+    productId = "[[${product.id}]]";
+    var csrfValue = "[[${_csrf.token}]]";
+    var csrfHeader = "[[${_csrf.headerName}]]";
+    
     $(document).ready(function () {
         $('.image-thumbnail').click(function () {
             var src = $(this).attr('src');
@@ -124,6 +128,9 @@
         });
     });
 </script>
+<script type="text/javascript" th:src="@{/js/common_form.js}"></script>
+<script type="text/javascript" th:src="@{/js/quantity_control.js}"></script>
+<script type="text/javascript" th:src="@{/js/add_to_cart.js}"></script>
 </body>
 <footer th:replace="fragments::footer('thenguyenngochn@gmail.com - TheTech')"></footer>
 </html>

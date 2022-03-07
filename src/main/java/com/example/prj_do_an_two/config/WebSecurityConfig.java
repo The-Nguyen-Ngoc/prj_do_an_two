@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -33,7 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/customer").authenticated()
+                .antMatchers("/account_details", "/update_account_details", "/cart"
+                , "/address_book/**").authenticated()
                 .anyRequest().permitAll()
                         .and()
                 .formLogin()
@@ -52,7 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe()
                 .key("1234567890_dfhsahfdhahfdhadfjdf")
-                .tokenValiditySeconds(14*24*60*60);
+                .tokenValiditySeconds(14*24*60*60)
+                .and().csrf().csrfTokenRepository(new HttpSessionCsrfTokenRepository());
 
     }
 

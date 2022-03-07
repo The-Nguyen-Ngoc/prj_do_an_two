@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div th:fragment="quantity_control(quantityValue, productId)">
+    <nav class="m-2">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link linkMinus" th:pid="${productId}" href="#">
+                    -
+                </a>
+            </li>
+            <li class="page-item">
+                <input style="width: 55px" th:id="'quantity' +${productId}"
+                       type="text" th:value="${quantityValue}" onkeydown="return false"
+                       class="form-control text-center"/>
+            </li>
+            <li class="page-item">
+                <a class="page-link linkPlus" th:pid="${productId}" href="#">+</a>
+            </li>
+        
+        </ul>
+    </nav>
+</div>
+</body>
+</html>

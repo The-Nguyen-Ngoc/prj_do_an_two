@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="vi">
+<head th:replace="fragments::header('Địa chỉ')">
+</head>
+<body>
+<div th:replace="fragments::menu">
+</div>
+<div th:replace="fragments :: search_nav"></div>
+<br>
+
+<div>
+    <h3 class="text-center m-4 p-2 border-bottom border-warning">Địa Chỉ Của Bạn</h3>
+</div>
+<div th:if="${message} != null" class="mt-4 alert alert-success text-center ">
+    [[${message}]]
+</div>
+<br>
+<a th:href="@{/address_book/create}" class="btn btn-success m-4">Thêm Địa Chỉ</a>
+<br>
+<div class="row m-auto" style="max-width: 1200px">
+    <div class="col-sm-5 m-2">
+        <div class="card" th:classappend="${!defaultPrimary ? '': 'bg-info'}">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col">
+                        <b>Địa chỉ mặc định</b>
+                        <th:block th:if="${defaultPrimary}">
+                            <span class="text-info">Địa chỉ mặc định</span>
+                        </th:block>
+                        <th:block th:unless="${defaultPrimary}">
+                            <a class="" th:href="@{'/address_book/default/0'}">
+                                ( Đặt làm mặc định )
+                            </a>
+                        </th:block>
+                    </div>
+                    <div class="col">
+                        <div class="float-right">
+                            <a th:href="@{/account_details(redirect=address_book)}" class="fas fa-edit text-warning"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body font-italic">
+               [[${customer.address}]]
+            </div>
+        </div>
+    </div>
+    
+    <th:block th:each="address,status :${addresses}">
+        <div class="col-sm-5 m-2">
+            <div class="card" th:classappend="${address.defaulForShipping?'bg-info': ''}">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+                            <b>Địa chỉ phụ [[${status.count}]]</b>
+                            <br>
+    
+                            <th:block th:if="${address.defaulForShipping}">
+                               <span class="text-info">Địa chỉ mặc định</span>
+                            </th:block>
+                            <th:block th:unless="${address.defaulForShipping}">
+                                <a class="" th:href="@{'/address_book/default/'+${address.id}}">
+                                   ( Đặt làm mặc định )
+                                </a>
+                            </th:block>
+                        </div>
+                        <div class="col">
+                            <div class="float-right">
+                                <a th:href="@{'/address_book/edit/'+ ${address.id}}" class="fas fa-edit text-warning"></a>
+                                <a th:userId="${address.id}" th:href="@{'/address_book/delete/' +${address.id}}" class="fas fa-trash-alt text-danger link-delete"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    [[${address.address}]]
+                </div>
+            </div>
+        </div>
+    </th:block>
+</div>
+
+<!--    modal dialog-->
+<div class="modal fade text-center" id="confirmModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle">Xác Nhận Xóa</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <span id="confirmText"></span>
+            </div>
+            
+            <div class="modal-footer">
+                <a class="btn btn-success" href="" id="yesButton">Xác Nhận</a>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Quay
+                    Lại
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div th:replace="fragments::footer_menu"></div>
+<br>
+<script type="text/javascript">
+    $(document).ready(() => {
+        $(".link-delete").on("click", function (e) {
+            e.preventDefault();
+            link = $(this);
+            userId = link.attr("userId");
+            $("#yesButton").attr("href", link.attr("href"));
+            $("#confirmText").text("Xóa địa chỉ này?");
+            $("#confirmModal").modal();
+        })
+    })
+</script>
+</body>
+<footer th:replace="fragments::footer(${COPYRIGHT})"></footer>
+</html>
