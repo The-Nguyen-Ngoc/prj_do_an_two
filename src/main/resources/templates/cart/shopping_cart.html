@@ -11,38 +11,47 @@
 <div class="text-center m-4">
     <h3>Thông Tin Giỏ Hàng</h3>
 </div>
-    <div id="sectionEmptyCartMessage" th:class="'text-center m-4 '+ ${#lists.isEmpty(cartItems) ? '' : ' d-none'}">
-        <span class="h4 text-danger">Không có sản phẩm trong giỏ hàng! </span>
-    </div>
+<div id="sectionEmptyCartMessage"
+     th:class="'text-center m-4 '+ ${#lists.isEmpty(cartItems) ? '' : ' d-none'}">
+    <span class="h4 text-danger">Không có sản phẩm trong giỏ hàng! </span>
+</div>
 <div class="row m-1" style="min-height: 400px">
     <div class="col-sm-8">
         <th:block th:each="item, status: ${cartItems}" class="m-2">
             <div class="row p-3" th:with="product = ${item.product}" th:id="'row'+ ${status.count}">
                 <div class="col-1">
-                    <div style="max-width: 20px" class="divCount text-center border border-warning rounded-circle font-weight-bold text-info">[[${status.count}]]</div>
+                    <div style="max-width: 20px"
+                         class="divCount text-center border border-warning rounded-circle font-weight-bold text-info">
+                        [[${status.count}]]
+                    </div>
                 </div>
                 <div></div>
                 <div class="col-3 shadow-sm">
-                    <img width="100px" th:src="@{${product.mainImagePath}}" class="img-fluid" alt="Image product"/>
-                    <a th:rowNumber="${status.count}" class="fas fa-trash float-right text-danger p-2 m-2 remove_item" th:href="@{'/cart/remove/'+${product.id}}"></a>
+                    <img width="100px" th:src="@{${product.mainImagePath}}" class="img-fluid"
+                         alt="Image product"/>
+                    <a th:rowNumber="${status.count}"
+                       class="fas fa-trash float-right text-danger p-2 m-2 remove_item"
+                       th:href="@{'/cart/remove/'+${product.id}}"></a>
                 </div>
                 <div class="col-6">
                     <a th:title="${product.name}" th:href="@{'/p/' + ${product.alias}}"><b
                             class="font-italic m-2">[[${product.shortName}]]</b></a>
                     <div th:replace="cart/quantity_control::quantity_control(${item.quantity}, ${product.id})"
                          class="col-2"></div>
-                       <span class="mx-2"> X</span>
+                    <span class="mx-2"> X</span>
                     <div class="mx-2">
                         <div th:if="${product.discountPercent <= 0}">
                         <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')" class="text-info">
                             [[${#numbers.formatDecimal(product.price,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] [[${CURRENCY_SYMBOL}]]
                         </span>
-                        <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')" class="text-info">
+                            <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')"
+                                  class="text-info">
                         [[${CURRENCY_SYMBOL}]] [[${#numbers.formatDecimal(product.price,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]]
                         </span>
                         </div>
                         <div th:if="${product.discountPercent > 0}">
-                            <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')" class="text-danger">
+                            <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')"
+                                  class="text-danger">
                                 [[${CURRENCY_SYMBOL}]] [[${#numbers.formatDecimal(product.discountPrice,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]]
                             </span>
                             <del th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')">
@@ -50,7 +59,8 @@
                                 [[${#numbers.formatDecimal(product.price,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]]
                                 )
                             </del>
-                            <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')" class="text-danger">
+                            <span th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')"
+                                  class="text-danger">
                                 [[${#numbers.formatDecimal(product.discountPrice,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] [[${CURRENCY_SYMBOL}]]
                             </span>
                             <del th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')">
@@ -62,8 +72,15 @@
                                 class="text-info font-weight-bold mark"> Giảm: [[${product.discountPercent}]]%</span>
                         </div>
                     </div>
-                    <div class="mx-2 font-weight-bold" th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')">= <span class="subtotal" th:id="'subtotal' + ${product.id}">[[${item.subTotal}]]</span> [[${CURRENCY_SYMBOL}]]</div>
-                    <div class="mx-2 font-weight-bold" th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')">= [[${CURRENCY_SYMBOL}]] <span class="subtotal" th:id="'subtotal' + ${product.id}">[[${item.subTotal}]]</span></div>
+                    <div class="mx-2 font-weight-bold"
+                         th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')">= <span class="subtotal"
+                                                                                  th:id="'subtotal' + ${product.id}">[[${item.subTotal}]]</span>
+                        [[${CURRENCY_SYMBOL}]]
+                    </div>
+                    <div class="mx-2 font-weight-bold"
+                         th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')">= [[${CURRENCY_SYMBOL}]]
+                        <span class="subtotal" th:id="'subtotal' + ${product.id}">[[${item.subTotal}]]</span>
+                    </div>
                 </div>
             </div>
         </th:block>
@@ -71,14 +88,20 @@
     <div class="col-sm-4" th:unless="${#lists.isEmpty(cartItems)}" id="sectionTotal">
         <div>
             <span class="h3 text-center">Tổng Tiền:</span>
-            <div class="m-2 h4 font-weight-bold" th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')"> <span id="total">[[${totalPrice}]]</span> [[${CURRENCY_SYMBOL}]]</div>
-            <div class="m-2 h4 font-weight-bold" th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')"> [[${CURRENCY_SYMBOL}]] <span id="total">[[${totalPrice}]]</span></div>
+            <div class="m-2 h4 font-weight-bold" th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')">
+                <span id="total">[[${totalPrice}]]</span> [[${CURRENCY_SYMBOL}]]
+            </div>
+            <div class="m-2 h4 font-weight-bold" th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')">
+                [[${CURRENCY_SYMBOL}]] <span id="total">[[${totalPrice}]]</span></div>
 
             <div th:if="${shippingSupported}">
-            <button class="btn btn-warning text-white p-2 m-2">Thanh Toán</button>
+                <form th:action="@{/checkout}">
+                    <button class="btn btn-warning text-white p-2 m-2">Thanh Toán</button>
+                </form>
             </div>
             <div th:unless="${shippingSupported}">
-                <div><span class="h5 text-danger">Không hỗ trợ vận chuyển tới khu vực này!</span></div>
+                <div><span class="h5 text-danger">Không hỗ trợ vận chuyển tới khu vực này!</span>
+                </div>
                 <div class="my-2 font-italic" th:unless="${usePrimaryAddressAsDefault}">
                     <a th:href="@{/address_book}">>>Chọn địa chỉ giao hàng khác</a>
                 </div>
@@ -88,7 +111,7 @@
             </div>
         </div>
     </div>
-   
+
 </div>
 
 <div th:replace="fragments::footer_menu"></div>
@@ -96,7 +119,7 @@
 <script type="text/javascript" th:src="@{/js/shopping_cart.js}"></script>
 <script type="text/javascript" th:src="@{/js/number.js}"></script>
 <script type="text/javascript" th:src="@{/js/common_form.js}"></script>
-<script type="text/javascript" >
+<script type="text/javascript">
     contextPath = "[[@{/}]]";
     var csrfValue = "[[${_csrf.token}]]";
     var csrfHeader = "[[${_csrf.headerName}]]";

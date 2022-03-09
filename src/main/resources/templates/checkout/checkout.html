@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="vi">
+<head th:replace="fragments::header('TheTech')">
+</head>
+<body>
+<div th:replace="fragments::menu">
+</div>
+<div th:replace="fragments :: search_nav"></div>
+<br>
+<div class="text-center m-4 text-white bg-success py-1">
+    <h3>Thanh Toán</h3>
+</div>
+<br>
+<div class="row m-1">
+    <div class="col-sm-8">
+        <div class="card m-3">
+            <div class="card-header">
+                <h3>Thông Tin Vận Chuyển</h3>
+            </div>
+            <div class="card-body">
+                <p>
+                    <b>Vận chuyển tới: </b>[[${shippingAddress.address}]]
+                </p>
+                <a th:href="@{/address_book}" class="btn btn-outline-danger">Đổi địa chỉ vận chuyển</a>
+                <p class="mt-3">
+                    <b>Số ngày vận chuyển: </b>[[${checkoutInfo.deliverDays}]] ngày
+                </p>
+                <p>
+                    <b>Ngày nhận hàng dự kiến: </b>[[${#dates.format(checkoutInfo.deliverDate,
+                    'E, dd-MM-yyyy')}]]
+                </p>
+            </div>
+        </div>
+
+        <div class="card m-3">
+            <div class="card-header">
+                <h3>Phương thức thanh toán</h3>
+            </div>
+            <div class="card-body">
+                <div th:if="${checkoutInfo.codSupported}">
+                    <p>
+                        <input type="radio" class="mb-3"/> Thanh Toán Khi Nhận Hàng (COD)<br>
+                        <button class="btn btn-outline-success">Đặt hàng với phương thức
+                            COD</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="card m-3">
+            <div class="card-header">
+                <h3>Đơn Hàng</h3>
+            </div>
+            <div class="card-body">
+                <div>
+                    <table>
+                    <th:block class="m-3" th:each="item :${cartItems}">
+                        <tr class="m-2 p-2 shadow-sm"
+                            th:with="product =${item.product}">
+                            <td width="70%">
+                                <a th:href="@{'/p/'+ ${product.alias}}" target="_blank">
+                                    [[${product.shortName}]]</a>
+                            </td>
+                            <td  th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')">
+                                <p class="font-italic font-weight-bold">Số lượng: [[${item.quantity}]]</p>
+                                <small>Phí ship:
+                                    [[${CURRENCY_SYMBOL}]] [[${#numbers.formatDecimal(item.shippingCost,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]]</small>
+                                Tổng:
+                                [[${CURRENCY_SYMBOL}]] [[${#numbers.formatDecimal(item.subTotal,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]]
+
+                            </td>
+                            <td  th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')">
+                                <p class="font-italic font-weight-bold">Số lượng: [[${item.quantity}]]</p>
+                                <small>Phí ship:
+                                    [[${#numbers.formatDecimal(item.shippingCost,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] [[${CURRENCY_SYMBOL}]] </small>
+                                Tổng:
+                                [[${#numbers.formatDecimal(item.subTotal,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] [[${CURRENCY_SYMBOL}]]
+
+                            </td>
+
+
+                        </tr>
+                    </th:block>
+                        <tr><td colspan="3"><hr/></td> </tr>
+                    </table>
+                </div>
+                <div></div>
+                <div class="row mt-2">
+                    <div class="col font-weight-bold text-info">Tổng tiền sản phẩm:</div>
+                    <div class="col">
+                        <p th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')"> [[${CURRENCY_SYMBOL}]]
+                            [[${#numbers.formatDecimal(checkoutInfo.productTotal,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]]</p>
+                        <p th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')">
+                            [[${#numbers.formatDecimal(checkoutInfo.productTotal,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] [[${CURRENCY_SYMBOL}]]</p>
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col font-weight-bold text-info">Tổng phí ship:</div>
+                    <div class="col">
+                        <p th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')"> [[${CURRENCY_SYMBOL}]]
+                            [[${#numbers.formatDecimal(checkoutInfo.shippingCostTotal,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]]</p>
+                        <p th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')">
+                            [[${#numbers.formatDecimal(checkoutInfo.shippingCostTotal,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] [[${CURRENCY_SYMBOL}]]</p>
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col font-weight-bold text-info">Tổng sản phẩm:</div>
+                    <div class="col">
+                        <p th:if="(${CURRENCY_SYMBOL_POSITION} == 'before')"> [[${CURRENCY_SYMBOL}]]
+                            [[${#numbers.formatDecimal(checkoutInfo.paymentTotal,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]]</p>
+                        <p th:if="(${CURRENCY_SYMBOL_POSITION} == 'after')">
+                            [[${#numbers.formatDecimal(checkoutInfo.paymentTotal,1,THOUSANDS_POINT_TYPE,DECIMAL_DIGITS,DECIMAL_POINT_TYPE)}]] [[${CURRENCY_SYMBOL}]]</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div th:replace="fragments::footer_menu"></div>
+<div th:replace="modal_fragments::modal_dialog"></div>
+</body>
+<footer th:replace="fragments::footer(${COPYRIGHT})"></footer>
+</html>
