@@ -20,8 +20,11 @@
                 <h3>Thông Tin Vận Chuyển</h3>
             </div>
             <div class="card-body">
-                <p>
-                    <b>Vận chuyển tới: </b>[[${shippingAddress.address}]]
+                <p th:if="${shippingAddressDefault!=null}">
+                    <b>Vận chuyển tới: </b>[[${shippingAddressDefault.address}]]
+                </p>
+                <p th:unless="${shippingAddressDefault!=null}">
+                    <b>Vận chuyển tới: </b>[[${shippingAddressCustomer}]]
                 </p>
                 <a th:href="@{/address_book}" class="btn btn-outline-danger">Đổi địa chỉ vận chuyển</a>
                 <p class="mt-3">
@@ -40,11 +43,12 @@
             </div>
             <div class="card-body">
                 <div th:if="${checkoutInfo.codSupported}">
+                    <form th:action="@{/place_order}" method="post">
                     <p>
-                        <input type="radio" class="mb-3"/> Thanh Toán Khi Nhận Hàng (COD)<br>
-                        <button class="btn btn-outline-success">Đặt hàng với phương thức
-                            COD</button>
+                        <input type="radio" name="paymentMethod" id="radioCOD" value="COD" class="mb-3"/> Thanh Toán Khi Nhận Hàng (COD)<br>
+                        <button class="btn btn-outline-success d-none" id="buttonSubmit">Đặt hàng với phương thức COD</button>
                     </p>
+                    </form>
                 </div>
             </div>
         </div>
@@ -126,6 +130,17 @@
 </div>
 <div th:replace="fragments::footer_menu"></div>
 <div th:replace="modal_fragments::modal_dialog"></div>
+<script type="text/javascript">
+    contextPath = "[[@{/}]]";
+    var csrfValue = "[[${_csrf.token}]]";
+    var csrfHeader = "[[${_csrf.headerName}]]";
+
+    $(document).ready(function (){
+        $('#radioCOD').click(function () {
+            $('#buttonSubmit').removeClass('d-none');
+        });
+    })
+</script>
 </body>
 <footer th:replace="fragments::footer(${COPYRIGHT})"></footer>
 </html>

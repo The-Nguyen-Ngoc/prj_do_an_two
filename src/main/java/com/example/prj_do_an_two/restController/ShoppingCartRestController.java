@@ -8,10 +8,7 @@ import com.example.prj_do_an_two.exception.ShoppingCartException;
 import com.example.prj_do_an_two.service.CustomerService;
 import com.example.prj_do_an_two.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -78,4 +75,5 @@ public class ShoppingCartRestController {
             return e.getMessage();
         }
     }
+
 }

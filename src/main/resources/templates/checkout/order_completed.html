@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="vi">
+<head th:replace="fragments::header('TheTech')">
+</head>
+<body>
+<div th:replace="fragments::menu">
+</div>
+<!--<a class="pl-3 h4 " th:href="@{/account_details}" sec:authentication="principal.userName"></a>-->
+<!--<div th:replace="fragments::search"></div>-->
+<div th:replace="fragments :: search_nav"></div>
+
+
+<div>
+    <h3 class="text-center m-4 p-2 border-bottom border-warning">Đặt Hàng Thành Công!</h3>
+</div>
+<br>
+<div class="font-italic text-center">
+    <h6>Thông tin đơn hàng đã được gửi đến Email của bạn!</h6>
+    <p>Vui lòng kiểm tra Email để biết thêm chi tiết</p>
+</div>
+<br>
+<br>
+
+<br>
+<div th:replace="fragments::footer_menu"></div>
+<br>
+<script type="text/javascript">
+
+</script>
+</body>
+<footer th:replace="fragments::footer(${COPYRIGHT})"></footer>
+</html>

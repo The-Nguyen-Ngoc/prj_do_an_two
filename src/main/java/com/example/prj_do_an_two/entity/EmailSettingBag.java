@@ -37,4 +37,10 @@ public class EmailSettingBag extends SettingBag {
     public String getSenderName(){
         return super.getValue("MAIL_SENDER_NAME");
     }
+    public String getOrderConfirmationObject(){
+        return super.getValue("ORDER_CONFIRMATION_SUBJECT");
+    }
+    public String getOrderConfirmationContent(){
+        return super.getValue("ORDER_CONFIRMATION_CONTENT");
+    }
 }

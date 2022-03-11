@@ -1,20 +1,15 @@
 package com.example.prj_do_an_two.controller;
 
 import com.example.prj_do_an_two.config.Utility;
-import com.example.prj_do_an_two.entity.Address;
-import com.example.prj_do_an_two.entity.CartItem;
-import com.example.prj_do_an_two.entity.Customer;
-import com.example.prj_do_an_two.entity.ShippingRate;
+import com.example.prj_do_an_two.entity.*;
 import com.example.prj_do_an_two.exception.CustomerNotFoundException;
-import com.example.prj_do_an_two.service.AddressService;
-import com.example.prj_do_an_two.service.CustomerService;
-import com.example.prj_do_an_two.service.ShippingRateService;
-import com.example.prj_do_an_two.service.ShoppingCartService;
+import com.example.prj_do_an_two.service.*;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -29,6 +24,10 @@ public class ShoppingCartController {
     AddressService addressService;
     @Autowired
     ShippingRateService shippingRateService;
+    @Autowired
+    OrderService orderService;
+    @Autowired
+    CheckoutService checkoutService;
 
     @SneakyThrows
     @GetMapping("/cart")
@@ -62,4 +61,7 @@ public class ShoppingCartController {
         String email = Utility.getEmailOfAuthenticatedCustomer(request);
         return customerService.getCustomerByEmail(email);
     }
+
+
+
 }

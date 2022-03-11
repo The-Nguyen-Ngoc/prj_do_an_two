@@ -16,7 +16,7 @@ public class ShoppingCartService {
     @Autowired
     CartItemRepo cartItemRepo;
     @Autowired
-    private ProductRepo productRepo;
+     ProductRepo productRepo;
 
     public Integer addProduct(Integer productId, Integer quantity, Customer customer) throws ShoppingCartException {
         Integer updatedQuantity = quantity;
@@ -58,5 +58,9 @@ public class ShoppingCartService {
 
     public void removeProduct(Integer productId, Customer customer) throws ShoppingCartException {
         cartItemRepo.deleteByCustomerAndProduct(customer.getId(), productId);
+    }
+
+    public void deleteByCustomer(Customer customer) {
+        cartItemRepo.deleteByCustomer(customer.getId());
     }
 }
