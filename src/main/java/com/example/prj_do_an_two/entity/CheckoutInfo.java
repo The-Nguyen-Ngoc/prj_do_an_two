@@ -2,6 +2,7 @@ package com.example.prj_do_an_two.entity;
 
 import lombok.Data;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -72,5 +73,10 @@ public class CheckoutInfo {
 
     public void setCodSupported(boolean codSupported) {
         this.codSupported = codSupported;
+    }
+
+    public String getPaymentPaypal() {
+        DecimalFormat df = new DecimalFormat("###,###.##");
+        return df.format(paymentTotal);
     }
 }

@@ -57,8 +57,13 @@ public class CheckoutController {
 
         List<CartItem> cartItemList = shoppingCartService.listCartItems(customer);
         CheckoutInfo checkoutInfo = checkoutService.prepareCheckout(cartItemList, shippingRate);
-
+        String currencyCode = settingService.getCurrencyCode();
+        PaymentSettingBag paymentSettings = settingService.getPaymentSettings();
+        String paypalClientId = paymentSettings.getClientID();
+        model.addAttribute("paypalClientId", paypalClientId);
         model.addAttribute("checkoutInfo", checkoutInfo);
+        model.addAttribute("currencyCode", currencyCode);
+        model.addAttribute("customer", customer);
         model.addAttribute("cartItems", cartItemList);
 
         return "checkout/checkout";
