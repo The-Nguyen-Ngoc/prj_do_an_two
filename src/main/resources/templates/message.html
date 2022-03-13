@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="vi">
+<head th:replace="fragments::header('TheTech')">
+</head>
+<body>
+<div th:replace="fragments::menu">
+</div>
+<!--<a class="pl-3 h4 " th:href="@{/account_details}" sec:authentication="principal.userName"></a>-->
+<!--<div th:replace="fragments::search"></div>-->
+<div th:replace="fragments :: search_nav"></div>
+
+<div th:if="${pageTitle!=null}">
+    <h3 th:text="${pageTitle}"></h3>
+</div>
+<div th:if="${message!=null}">
+    <h3 th:text="${message}"></h3>
+</div>
+
+
+</body>
+<footer th:replace="fragments::footer(${COPYRIGHT})"></footer>
+</html>

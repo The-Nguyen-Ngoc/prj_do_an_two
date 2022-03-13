@@ -3,6 +3,7 @@ package com.example.prj_do_an_two.controller;
 import com.example.prj_do_an_two.config.Utility;
 import com.example.prj_do_an_two.entity.*;
 import com.example.prj_do_an_two.exception.CustomerNotFoundException;
+import com.example.prj_do_an_two.exception.PayPalApiException;
 import com.example.prj_do_an_two.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -37,6 +38,8 @@ public class CheckoutController {
     private OrderService orderService;
     @Autowired
     private SettingService settingService;
+    @Autowired
+    private PayPalService payPalService;
 
 
     @GetMapping("/checkout")
@@ -135,4 +138,26 @@ public class CheckoutController {
         helper.setText(content, true);
         mailSender.send(message);
     }
+
+    @PostMapping("/process_paypal_order")
+    public String processPayPalOrder(HttpServletRequest request, Model model) throws MessagingException, UnsupportedEncodingException, CustomerNotFoundException {
+        String orderId = request.getParameter("orderId");
+        String pageTitle = null;
+        String message = null;
+        try {
+            if(payPalService.validateOrder(orderId)){
+                return placeOrder(request);
+            }else {
+                pageTitle = "Thanh Toán Thất Bại";
+                message = "Giao Dịch Không Được Hoàn Thành!";
+            }
+        } catch (PayPalApiException e) {
+            message = "Giao Dịch Thất Bại, Lỗi: " + e.getMessage();
+
+        }
+        model.addAttribute("pageTitle", pageTitle);
+        model.addAttribute("message", message);
+        return "message";
+    }
+
 }
