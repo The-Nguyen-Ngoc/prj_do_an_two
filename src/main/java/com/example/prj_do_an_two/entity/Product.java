@@ -1,6 +1,7 @@
 package com.example.prj_do_an_two.entity;
 
 
+import com.example.prj_do_an_two.constant.Constant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -81,7 +82,7 @@ public class Product {
     public String getMainImagePath(){
         if(id == null|| mainImage == null) return "/images/preview.png";
 
-        return "/product-images/"+this.id+"/"+this.mainImage;
+        return Constant.BASE_URL_AWS + "product-images/"+this.id+"/"+this.mainImage;
     }
 
     public void addDetail(String detailName, String detailValue) {

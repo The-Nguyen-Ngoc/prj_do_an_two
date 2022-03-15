@@ -1,5 +1,6 @@
 package com.example.prj_do_an_two.entity;
 
+import com.example.prj_do_an_two.constant.Constant;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -65,7 +66,7 @@ public class Category {
     public String getImagePath(){
         if(this.id == null) return "/images/category.png";
 
-        return "/category-images/"+ this.id + "/"+ this.image;
+        return Constant.BASE_URL_AWS + "category-images/"+ this.id + "/"+ this.image;
     }
 
 

@@ -58,11 +58,11 @@ public class User {
         this.enabled = enabled;
     }
 
-    @Transient
-    public String getPhotosImagePath(){
-        if(id == null || photos == null) return "/images/avatar.jpg";
-        return "/user-photos/"+ this.id + "/"+ this.photos;
-    }
+//    @Transient
+//    public String getPhotosImagePath(){
+//        if(id == null || photos == null) return "/images/avatar.jpg";
+//        return "/user-photos/"+ this.id + "/"+ this.photos;
+//    }
 
     public boolean hasRole(String roleName){
         Iterator<Role> iterator = roles.iterator();

@@ -1,6 +1,7 @@
 package com.example.prj_do_an_two.entity;
 
 
+import com.example.prj_do_an_two.constant.Constant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,6 @@ public class ProductImage {
 
     @Transient
     public String getImagePath() {
-        return "/product-images/" +product.getId()+"/extras/"+this.name;
+        return Constant.BASE_URL_AWS + "product-images/" +product.getId()+"/extras/"+this.name;
     }
 }

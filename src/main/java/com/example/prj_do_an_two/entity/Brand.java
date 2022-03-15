@@ -1,5 +1,6 @@
 package com.example.prj_do_an_two.entity;
 
+import com.example.prj_do_an_two.constant.Constant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,6 +42,6 @@ public class Brand {
     public String getLogoPath() {
         if(this.id == null) return "/images/img_1.png";
 
-        return "/brand-logos/" + this.id +"/"+ this.logo;
+        return Constant.BASE_URL_AWS+ "brand-logos/" + this.id +"/"+ this.logo;
     }
 }
