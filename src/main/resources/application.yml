@@ -7,6 +7,9 @@ spring:
         password: Ngocthe1
         url: jdbc:mysql://localhost:3306/tech_shop
         username: root
+        hikari:
+            minimum-idle: 1
+            maximum-pool-size: 2
     jpa:
         hibernate:
             ddl-auto: update
