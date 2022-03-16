@@ -73,9 +73,9 @@
                 <li class="nav-item  px-1 h5">
                     <a class="nav-link border-left border-warning text-success" data-placement="bottom" title="Thanh Toán" th:href="@{/checkout}">💵</a>
                 </li>
-                <li class="nav-item  px-1 h5">
-                    <a class="nav-link border-left border-warning text-success" data-placement="bottom" title="Vận Chuyển" th:href="@{/users}">🚙</a>
-                </li>
+<!--                <li class="nav-item  px-1 h5">-->
+<!--                    <a class="nav-link border-left border-warning text-success" data-placement="bottom" title="Vận Chuyển" th:href="@{/users}">🚙</a>-->
+<!--                </li>-->
                
                 <li class="nav-item  px-1 h5">
                     <a class="nav-link border-left border-warning text-success" data-placement="bottom" title="Liên Hệ" th:href="@{/register}">📞</a>
@@ -95,7 +95,7 @@
             </form>
         </th:block>
         
-        <nav class="navbar navbar-expand-sm bg-light">
+        <nav style="background-color: indianred" class="navbar navbar-expand-sm">
             <button class="navbar-toggler text-info border border-warning " type="button" data-toggle="collapse"
                     data-target="#searchNavbar">
                 Menu
@@ -111,34 +111,36 @@
                 </form>
                 <ul class="navbar-nav float-left mx-3 text-success">
                     <th:block sec:authorize="isAuthenticated()">
-                        <li class="nav-item font-weight-bold bg-light border-bottom border-warning rounded-lg">
-                            <p class="nav-link">Xin chào
+                        <li class="nav-item font-weight-bold">
+                            <p class="nav-link" style="color: coral">Xin chào
                                 <b> <a class="" th:href="@{/account_details}" sec:authentication="principal.name"></a>
                                 </b>!</p>
                         </li>
-                        
-                        <li class="nav-item font-weight-bold bg-light border-bottom border-warning rounded-lg">
-                            <a class="nav-link text-success" th:href="@{/address_book}">Địa chỉ</a>
+
+                        <li class="nav-item font-weight-bold">
+                            <a style="color: wheat" class="nav-link" th:href="@{/address_book}">Địa chỉ</a>
                         </li>
+<!--                        -->
+<!--                        <li class="nav-item font-weight-bold">-->
+<!--                            <a style="color:hotpink " class="nav-link" href="">Hỏi Đáp</a>-->
+<!--                        </li>-->
+<!--                        -->
+<!--                        <li class="nav-item font-weight-bold">-->
+<!--                            <a style="color: hotpink" class="nav-link" th:href="@{/reviews}">Đánh-->
+<!--                                Giá</a>-->
+<!--                        </li>-->
                         
-                        <li class="nav-item font-weight-bold bg-light border-bottom border-warning rounded-lg">
-                            <a class="nav-link text-success" href="">Hỏi Đáp</a>
-                        </li>
-                        
-                        <li class="nav-item font-weight-bold bg-light border-bottom border-warning rounded-lg">
-                            <a class="nav-link text-success" th:href="@{/reviews}">Đánh Giá</a>
-                        </li>
-                        
-                        <li class="nav-item font-weight-bold bg-light border-bottom border-warning rounded-lg">
-                            <a class="nav-link text-success" th:href="@{/orders}">Đơn Đặt Hàng</a>
-                        </li>
-                        
-                        <li class="nav-item font-weight-bold bg-light border-bottom border-warning rounded-lg">
-                            <a class="nav-link text-success fas fa-shopping-cart fa-2x" th:href="@{/cart}"></a>
+<!--                        <li class="nav-item font-weight-bold">-->
+<!--                            <a style="color: wheat" class="nav-link" th:href="@{/orders}">Đơn Đặt Hàng</a>-->
+<!--                        </li>-->
+<!--                        -->
+                        <li class="nav-item font-weight-bold">
+                            <a style="color: wheat" class="nav-link fas fa-shopping-cart fa-2x" th:href="@{/cart}"></a>
                         </li>
                         <li> &nbsp;</li>
                         <li class="nav-item font-weight-bold ml-4 text-white ">
-                            <button class="nav-link h6 btn btn-outline-danger" id="logoutLink"> Đăng Xuất</button>
+                            <button class="nav-link h6 btn btn-outline-success" id="logoutLink"> Đăng
+                                Xuất</button>
                         </li>
                     </th:block>
                 </ul>
